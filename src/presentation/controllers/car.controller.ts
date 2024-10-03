@@ -7,8 +7,8 @@ import { ListUserCarsUseCase } from 'src/application/use-cases/car/list-user-car
 @Controller('users/:userId/cars')
 export class CarController {
   constructor(
-    private readonly createCarUseCase: CreateCarUseCase,
-    private readonly listUserCarsUseCase: ListUserCarsUseCase,
+    private readonly createCar: CreateCarUseCase,
+    private readonly listUserCars: ListUserCarsUseCase,
   ) {}
 
   @Post()
@@ -16,7 +16,7 @@ export class CarController {
     @Param('userId') userId: string,
     @Body() createCarDto: CreateCarDto,
   ): Promise<Car> {
-    return await this.createCarUseCase.execute({
+    return await this.createCar.execute({
       ...createCarDto,
       ownerId: userId,
     });
@@ -24,6 +24,6 @@ export class CarController {
 
   @Get()
   async list(@Param('userId') userId: string): Promise<Car[]> {
-    return await this.listUserCarsUseCase.execute(userId);
+    return await this.listUserCars.execute(userId);
   }
 }
